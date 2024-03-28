@@ -22,7 +22,7 @@ class Task(models.Model):
         ("not", "Not Urgent"),
     ]
 
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=63)
     description = models.TextField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="todo")
     priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default="medium")
