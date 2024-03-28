@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}{{task.title}}{% endblock title %}
+
+{% block content %}
+<h1 class="display-1 text-primary">{{task.title}}</h1>
+<p><strong>Description:</strong> {{task.description}}</p>
+<p><strong>Status:</strong> {{task.status}}</p>
+<p><strong>Priority:</strong> {{task.priority}}</p>
+{% if task.urgency %}
+<p><strong>Urgency:</strong> {{task.urgency}}</p>
+{% endif %}
+{% if task.due_date %}
+<p><strong>Due at:</strong> {{task.due_date}}</p>
+{% endif %}
+
+<a href="{% url 'task_list' %}" class="btn btn-secondary mt-3">Go back to task list</a>
+{% endblock content %}
