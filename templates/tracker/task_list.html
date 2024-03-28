@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+</head>
+<body>
+    {% for task in tasks %}
+    <h2>{{task.title}}</h2>
+    <p>{{task.description}}</p>
+    <p>{{task.status}}</p>
+    <p>{{task.priority}}</p>
+    <p>By {{task.creator}}</p>
+    {% endfor %}
+</body>
+</html>
