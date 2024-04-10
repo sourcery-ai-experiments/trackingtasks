@@ -1,0 +1,13 @@
+.large {
+    font-size: larger;
+}
+
+.center{
+    margin: auto;
+    justify-content: center;
+    align-items: left;
+}
+
+li {
+    color:rgb(9, 16, 46);
+}

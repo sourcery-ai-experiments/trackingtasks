@@ -1,4 +1,3 @@
-from django.db.models.query import QuerySet
 from django.views.generic import ListView, DetailView, CreateView, View, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
@@ -37,14 +36,14 @@ class TaskCreate(LoginRequiredMixin, CreateView):
     template_name = 'tracker/task_form.html'
     form_class = TaskForm
     success_url = reverse_lazy("task_list")
-    
+
     def form_valid(self, form):
         form.instance.creator = self.request.user
         return super().form_valid(form)
 
 
 class TaskCompleteView(LoginRequiredMixin, UserIsOwnerMixin, View):
-    def post(self, request, *args, **kwargs):
+    def post(self, _request, *args, **kwargs):
         task = self.get_object()
         task.status = "done"
         task.save()

@@ -11,6 +11,7 @@ class TaskForm(forms.ModelForm):
         for field in self.fields:
             self.fields[field].widget.attrs.update({"class": "form-control"})
 
+
 class TaskFilterForm(forms.Form):
     STATUS_CHOICES = [
         ("", "Any"),
@@ -20,8 +21,8 @@ class TaskFilterForm(forms.Form):
     ]
 
     status = forms.ChoiceField(choices=STATUS_CHOICES, required=False, label="Status")
-    
+
     def __init__(self, *args, **kwargs):
-        super(TaskFilterForm, self).__init__(*args, **kwargs)
-        self.fields["status"].widget.attrs.update({"class": "form-control mt-3"})
+        super().__init__(*args, **kwargs)
+        self.fields["status"].widget.attrs.update({"class": "form-control"})
     

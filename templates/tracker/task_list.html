@@ -1,35 +1,42 @@
 {% extends 'base.html' %}
+{% load static %}
 
-{% block title %}List of tasks{% endblock title %}
+{% block title %}Task list{% endblock title %}
+
+{% block additional_css %}
+<link href="{% static 'center.css' %}" rel="stylesheet">
+<link href="{% static 'badges.css' %}" rel="stylesheet">
+{% endblock additional_css %}
 
 {% block content %}
 <h1 class="text-primary">List of all tasks</h1>
-<a class="btn btn-primary" href="{% url 'task_add' %}">Create a new task</a>
 
-<p><form method="get" class="form-inline mb-3">
-    {{form.status.label_tag}}
-    {{form.status}}
-    <button type="submit" class="btn btn-primary mt-2">Filter</button>
-</form></p>
+<div class="form-row">
+    <form method="get" class="row g-3 align-items-center mb-3">
+        <span class="col-auto">{{form.status.label_tag}}</span>
+        <span class="col">{{form.status}}</span>
+        <button type="submit" class="btn btn-primary col-auto">Filter</button>
+    </form>
+</div>
 
-<ul class="list-group">
+<div class="center">
+    <a class="btn btn-primary" href="{% url 'task_add' %}">Create a new task</a>
+</div>
+
+<ul class="list-group mt-4">
     {% for task in tasks %}
-    <li class="list-group-items">
+    <li class="list-group-item d-flex justify-content-between align-items-center">
         <div>
-            <a href="{% url 'task_detail' task.pk %}">{{task.title}}</a>
-            <span class="badge badge-primary">{{task.status}}</span>
-            <span class="badge badge-secondary">{{task.priority}}</span>
-            {% if task.urgency %}
-            <span class="badge badge-secondary">{{task.urgency}}</span>
-            {% endif %}
+            <a href="{% url 'task_detail' task.pk %}">{{ task.title }}</a>
+            <span class="badge badge-primary">{{ task.status }}</span>|<span class="badge badge-secondary">{{ task.priority }}</span>
         </div>
-        <form method="post" action="{% url 'task_complete' task.pk %}">
+        <form action="{% url 'task_complete' task.pk %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-warning btn-sm">Complete</button>
         </form>
     </li>
     {% empty %}
-    <li class="list-group-items">There are no tasks.</li>
+    There are no tasks.
     {% endfor %}
 </ul>
 {% endblock content %}
