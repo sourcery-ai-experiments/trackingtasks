@@ -8,13 +8,13 @@ class Task(models.Model):
         ("in_progress", "In Progress"),
         ("done", "Done")
     ]
-    
+
     PRIORITY_CHOICES = [
         ("low", "Low"),
         ("medium", "Medium"),
         ("high", "High")
     ]
-    
+
     URGENCY_CHOICES = [
         ("very", "Very Urgent"),
         ("urgent", "Urgent"),
@@ -32,4 +32,4 @@ class Task(models.Model):
 
 
     def __str__(self):
-        return self.title
+        return str(self.title)

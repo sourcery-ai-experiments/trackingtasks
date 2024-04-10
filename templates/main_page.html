@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Task Manager{% endblock title %}
+
+{% block additional_css %}
+<link href="{% static 'main_page.css' %}" rel="stylesheet">
+{% endblock additional_css %}
+
+{% block content %}
+<div class="large">
+    <h1 class="text-center">Task manager</h1>
+    <div class="container  col-md-6 col-lg-4 col-xl-3 center">
+        <p class="md-mt-3 text-center">In our manager you can:</p>
+        <ul class="">
+            <li>create tasks</li>
+            <li>manage the task urgency</li>
+            <li>assign tasks to projects</li>
+            <li>and potentially more!</li>
+        </ul>
+    </div>
+    <p class="text-center">
+        {% if user.is_authenticated %}
+        Procceed to your <a href="{% url 'task_list' %}">task</a> or <a href="#" >project</a> list.
+        {% else %}
+        <a href="#">Log in</a> or <a href="#">sign up</a> to enjoy the full functionality of the task manager.
+        {% endif %}
+    </p>
+</div>
+{% endblock content %}

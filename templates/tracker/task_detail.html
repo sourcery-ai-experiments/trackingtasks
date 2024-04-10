@@ -1,21 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}{{task.title}}{% endblock title %}
+{% block additional_css %}
+<link href="{% static 'badges.css' %}" rel="stylesheet">
+<link href="{% static 'task_detail.css' %}" rel="stylesheet">
+{% endblock additional_css %}
 
 {% block content %}
-<h1 class="display-1 text-primary">{{task.title}}</h1>
-<p><strong>Description:</strong> {{task.description}}</p>
-<p><strong>Status:</strong> {{task.status}}</p>
-<p><strong>Priority:</strong> {{task.priority}}</p>
-{% if task.urgency %}
-<p><strong>Urgency:</strong> {{task.urgency}}</p>
-{% endif %}
-{% if task.due_date %}
-<p><strong>Due at:</strong> {{task.due_date}}</p>
-{% endif %}
+<div class="row text-md-center">
+    <h1 class="display-1 text-primary">{{task.title}}</h1>
+    <p class="display-6"><span class="badge badge-primary">{{ task.status }}</span>|
+        <span class="badge badge-secondary">{{ task.priority }}</span>
+        {% if task.urgency %}
+        |<span class="badge badge-secondary">{{ task.urgency }}</span>
+        {% endif %}
+        {% if task.due_date %}
+        |<span class="badge badge-secondary">{{ task.due_date }}</span>
+        {% endif %}</p>
+    <p>{{task.description}}</p>
+</div>
 
-<a href="{% url 'task_update' task.pk %}" class="btn btn-warning mt-3">Update</a>
-<a href="{% url 'task_delete' task.pk %}" class="btn btn-danger mt-3">Delete</a>
-
-<p><a href="{% url 'task_list' %}" class="btn btn-secondary mt-3">Go back to task list</a></p>
+<div class="row">
+    <div class="col text-md-center">
+        <a href="{% url 'task_update' task.pk %}" class="btn btn-warning mt-3 btn-ex">Update</a>
+    </div>
+    <div class="col text-md-center">
+        <a href="{% url 'task_delete' task.pk %}" class="btn btn-danger mt-3 btn-ex">Delete</a>
+    </div>
+    <div class="col text-md-center">
+        <a href="{% url 'task_list' %}" class="btn btn-secondary mt-3 btn-ex">Go back to task list</a>
+    </div>
+</div>
 {% endblock content %}

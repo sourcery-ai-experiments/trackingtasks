@@ -17,9 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from project.views import MainPageTemplate
 
 urlpatterns = [
+    path('', MainPageTemplate.as_view(), name="main_page"),
     path('tasks/', include('tracker.urls')),
-    path('tasks/admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('accounts/login/', auth_views.LoginView.as_view(), name="login")
 ]
