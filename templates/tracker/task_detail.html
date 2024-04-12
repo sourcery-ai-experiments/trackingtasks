@@ -32,4 +32,11 @@
         <a href="{% url 'task_list' %}" class="btn btn-secondary mt-3 btn-ex">Go back to task list</a>
     </div>
 </div>
+
+<p><a href="{% url 'post_comment' task.pk%}">Post comment</a></p>
+
+{% for comment in comments %}
+<p>{{comment.author}}, {{comment.created_at}}</p>
+<p>{{comment.content}}</p>
+{% endfor %}
 {% endblock content %}
