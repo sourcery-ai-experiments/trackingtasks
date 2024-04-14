@@ -10,3 +10,7 @@ textarea {
     resize: none;
     height: 10em;
 }
+
+.action_form {
+    display: inline;
+}

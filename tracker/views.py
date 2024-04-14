@@ -5,8 +5,10 @@ from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
-from tracker.models import Task, Comment
-from tracker.forms import TaskForm, TaskFilterForm, CommentForm
+from tracker.models import Task
+from comments.models import Comment
+from tracker.forms import TaskForm, TaskFilterForm
+from comments.forms import CommentForm
 from tracker.mixins import UserIsOwnerMixin
 
 class TaskListView(ListView):
@@ -37,7 +39,13 @@ class TaskDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["comments"] = Comment.objects.filter(task=self.get_object())
+        comments = Comment.objects.filter(task=self.get_object())
+        for comment in comments:
+            comment.liked = comment.likes.filter(id=self.request.user.id).exists()
+            comment.disliked = comment.dislikes.filter(id=self.request.user.id).exists()
+            comment.num_likes = comment.number_of_likes()
+            comment.num_dislikes = comment.number_of_dislikes()
+        context['comments'] = comments
         context["form"] = CommentForm()
         return context
 
