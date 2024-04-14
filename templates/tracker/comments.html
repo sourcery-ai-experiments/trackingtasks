@@ -1,0 +1,21 @@
+<h3 class="display-3 text-primary">Comments</h3>
+
+{% if user.is_authenticated %}
+{% include 'tracker/post_comment.html' %}
+{% else %}
+<p>Log in to add a comment.</p>
+{% endif %}
+
+<div class="container mt-5 mb-3">
+    {% for comment in comments %}
+    <div class="row mt-3">
+        <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">{{comment.author}}</h4>
+            <h6 class="card-subtitle text-body-secondary">{{comment.created_at}}</h5>
+            <p class="card-text">{{comment.content}}</p>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
