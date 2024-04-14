@@ -3,8 +3,10 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import View
+from django.views.generic import View, UpdateView, DeleteView
+from comments.mixins import UserIsOwnerMixin
 from comments.models import Comment
+from comments.forms import CommentForm
 
 class CommentLikeDislikeView(LoginRequiredMixin, View):
     def post(self, request, pk, action):
@@ -30,3 +32,22 @@ class CommentLikeDislikeView(LoginRequiredMixin, View):
         comment.save()
         task_url = reverse_lazy("task_detail", kwargs={'pk':comment.task.pk})
         return redirect(f'{task_url}#{comment.pk}')
+
+
+class CommentUpdateView(LoginRequiredMixin, UserIsOwnerMixin, UpdateView):
+    model = Comment
+    form_class = CommentForm
+    template_name = 'comments/comment_update.html'
+    
+    def get_success_url(self, **kwargs):
+        task_url = reverse_lazy("task_detail", kwargs={"pk":self.get_object().task.pk})
+        pk = self.get_object().pk
+        return f'{task_url}#{pk}'
+
+
+class CommentDeleteView(LoginRequiredMixin, UserIsOwnerMixin, DeleteView):
+    model = Comment
+    template_name = 'comments/comment_delete_confirm.html'
+
+    def get_success_url(self, **kwargs):
+        return reverse_lazy("task_detail", kwargs={"pk":self.get_object().task.pk})
